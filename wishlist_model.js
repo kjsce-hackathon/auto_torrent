@@ -22,7 +22,7 @@ module.exports = {
 	}
 	,
 
-	get: (user_id,cb)=>{
+	get: (user_id)=>{
 		return new Promise((resolve,reject)=>{
 			pool = require("./db.js");
 			pool.getConnection(function(err, connection){
