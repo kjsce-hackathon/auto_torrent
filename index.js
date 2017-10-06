@@ -1,11 +1,11 @@
 const express=require('express');
 const app=express();
 const torrentSearch = new (require('torrent-search-api'))();
-
+const wishmodel=require('./wishlist_model');
 torrentSearch.enableProvider('ThePirateBay');
 
 
-console.log(torrentSearch.getActiveProviders());
+// console.log(torrentSearch.getActiveProviders());
 /*
 torrentSearch.search('720', 'All', 20)
     .then(torrents => {
@@ -35,16 +35,20 @@ let userid,query,type;
  res.send('one or more parameter of query string is empty');
  else{
 
-    torrentSearch.search(query, type, 10)
+    torrentSearch.search(query, type,1)
     .then(torrents =>{
     	if(torrents.length == 0){
     		res.json({ message : 'torrent not available' });
-    	
+
+    	  wishlist.insert(userid,type,query,function(err,rows){
+                // console.log(rows);
+                console.log("Insert successful");
+            })
 
 
 
     	}
-    	else
+    	else //currently sending array of torrents and limit is 1
          res.json(torrents);
     })
     .catch(err => {
@@ -56,22 +60,36 @@ let userid,query,type;
 
 
 
+app.get('/getWishlist',(req,res)=>{
+let userid=req.query.id;
+
+
+let bag=[];
+wishmodel.get(userid)
+.then(rows=>{
+
+
+for(let i=0 ; i < rows.length ; i++){
+		let obj={};
+
+		obj.type=rows[i].type;
+		obj.query=rows[i].query;
+		// console.log(type);
+		// console.log(query);
+		bag.push(obj);
+}
+res.json(bag);
+
+}).catch(err=>{
+	console.log('line 80 -90 ' + err);
+});
+
+})
+
+
 
 let port =3000;
 app.listen(port,()=>{
 
 console.log('listening on port '+ port);
 });
-// console.log(TorrentSearchApi);
-// console.log('**********************************************')
-
-// console.log(torrentSearch.getActiveProviders());
-// console.log(torrentSearch.getProviders());
-
-// console.log(torrentSearch.getActiveProviders());
-//try to finish only one completely i.e TV / movies and automate
-
-/*torrentSearch.search('game of thrones','video',10)
-     .then(torrents => {
-     	console.log(torrents);
-    });*/
