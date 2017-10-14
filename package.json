@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-  	"start" : "node index"
+    "start": "node index"
   },
   "author": "bhavikk shah,Jigar Wala",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.2",
+    "torrent-search-api": "^1.0.18"
+  }
 }
