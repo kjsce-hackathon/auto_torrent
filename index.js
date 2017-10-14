@@ -7,16 +7,6 @@ const path=require('path');
 torrentSearch.enableProvider('ThePirateBay');
 
 
-// console.log(torrentSearch.getActiveProviders());
-/*
-torrentSearch.search('720', 'All', 20)
-.then(torrents => {
-console.log(torrents);
-})
-.catch(err => {
-console.log(err);
-});
-*/
 let c=0;
 app.get('/new',(req,res)=>{
 	res.json({
@@ -82,6 +72,7 @@ res.json({ torrents : bag});
 
 }).catch(err=>{
 	console.log('line 80 - 90 ' + err);
+	res.json({ message : 'database down '});
 });
 
 })
@@ -134,17 +125,7 @@ app.get("/checkAvailable",(req,res)=>{
 });
 
 
-/*app.use(express.static(path.join(__dirname,'public'))); 
-
-app.get('/app/',(req,res)=>{
-
-res.sendFile('./home.html',{root:__dirname+"/public"});
-
-})*/
-
-
-
-let port =3000;
+let port =process.env.port || 3000;
 app.listen(port,()=>{
 
 	console.log('listening on port '+ port);

@@ -1,8 +1,8 @@
-
+const torrentSearch = new (require('torrent-search-api'))();
 // console.log(new Date().getTime())
 
-/*const wishmodel=require('./wishlist_model');
-
+// const wishmodel=require('./wishlist_model');
+/*
 wishmodel.get(1).then(rows=>{
 
 
@@ -15,3 +15,6 @@ console.log(rows)
 }).catch(err=>{
 	console.log(err);
 })*/
+torrentSearch.enableProvider('ThePirateBay');
+
+console.log(torrentSearch.getActiveProviders());
